@@ -4,7 +4,7 @@
 #include "./headers/functions.h"
 
 void configDowSelectionHandler(char * selectionName, char ** selectionValues, int *selectionCounter, int limitValue, int initialValue) {
-	while (buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0) == 0)
+	while (! buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0))
 	{
 		lcd.setCursor(3,0);
 		lcd.print("Select ");
@@ -31,7 +31,7 @@ void configDowSelectionHandler(char * selectionName, char ** selectionValues, in
 void configSelectionHandler(char * selectionName, int *selectionValue, int *limitValue, int *initialValue) {
 	for (int selectionStage = 0; selectionStage < 3; selectionStage++)
 	{
-		while (buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0) == 0)
+		while (! buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0))
 		{
 			lcd.setCursor(3,0);
 			lcd.print("Select ");
@@ -63,6 +63,20 @@ void configSelectionHandler(char * selectionName, int *selectionValue, int *limi
 }
 
 void clockConfigFunction() {
+	lcd.clear();
+	lcd.setCursor(1,0);
+	lcd.print("Set Date/Time");
+	lcd.setCursor(0,1);
+	lcd.print("<-Exit");
+	lcd.setCursor(10,1);
+	lcd.print("Next->");
+
+	while (! buttonClickHandler(&buttonPin_2, &buttonState_2, &previousButtonState_2, 0))
+	{
+		if (buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0)) return;
+	}
+	
+
 	// DOW
 	char * DOWarray[] = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
 	int DOWcounter = 0;

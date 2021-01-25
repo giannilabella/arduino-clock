@@ -36,8 +36,12 @@ void setup() {
 }
 
 void loop() {
-	if ( buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0) == 1)
+	if (buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0))
 	{
 		clockConfigFunction();
+		lcd.clear();
 	}
+
+	lcd.setCursor(0,0);
+	lcd.print("Horario");
 }
