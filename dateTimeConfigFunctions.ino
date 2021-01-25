@@ -33,16 +33,21 @@ void configSelectionHandler(char * selectionName, int *selectionValue, int *limi
 	{
 		while (! buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0))
 		{
-			lcd.setCursor(3,0);
+			lcd.setCursor(1,0);
 			lcd.print("Select ");
 			lcd.print(selectionName);
+			lcd.setCursor(13,0);
+			lcd.print("(");
+			lcd.print(selectionStage + 1);
+			lcd.print(")");
 			lcd.setCursor(0,1);
 			lcd.print("=> ");
-			lcd.print(selectionValue[0]);
-			lcd.print(" ");
-			lcd.print(selectionValue[1]);
-			lcd.print(" ");
-			lcd.print(selectionValue[2]);		
+			for (int i = 0; i < 3; i++)
+			{
+				if (selectionValue[i] < 10) lcd.print("0");
+				lcd.print(selectionValue[i]);
+				lcd.print(" ");
+			}		
 
 			if (buttonClickHandler(&buttonPin_2, &buttonState_2, &previousButtonState_2, 1)) {
 				selectionValue[selectionStage] ++;
@@ -75,28 +80,27 @@ void clockConfigFunction() {
 	{
 		if (buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0)) return;
 	}
-	
 
 	// DOW
-	char * DOWarray[] = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
-	int DOWcounter = 0;
-	int limitDOWValue = 6;
-	int initialDOWValue = 0;
+	char * DOWarray[] = {"", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
+	int DOWcounter = 1;
+	int limitDOWValue = 7;
+	int initialDOWValue = 1;
 
 	// Date: day, month, year
 	int dateValue[] = {1, 1, 2021};
 	int limitDateValue[] = {31, 12, -1};
 	int initialDateValue[] = {1, 1, 2021};
 
-	// Time: hour, minutes, seconds
+	// Time: hours, minutes, seconds
 	int timeValue[] = {0, 0, 0};
 	int limitTimeValue[] = {23, 59, 59};
 	int initialTimeValue[] = {0, 0, 0};
 
 	lcd.clear();
 
-	configDowSelectionHandler("DOW", DOWarray, &DOWcounter, limitDOWValue, initialDOWValue);
-	Serial.println(DOWarray[DOWcounter]);
+	// configDowSelectionHandler("DOW", DOWarray, &DOWcounter, limitDOWValue, initialDOWValue);
+	// Serial.println(DOWarray[DOWcounter]);
 
 	configSelectionHandler("Date", dateValue, limitDateValue, initialDateValue);
 	Serial.println(dateValue[0]);
@@ -112,6 +116,17 @@ void clockConfigFunction() {
 	lcd.print("processo");
 	lcd.setCursor(0,1);
 	lcd.print("concluido");
+
+	rtc.adjust
+	(
+		DateTime
+		(	
+			//	year, month, day
+			dateValue[2], dateValue[1], dateValue[0],
+			// seconds, minutes, hours
+			timeValue[2], timeValue[1], timeValue[0]
+		)
+	);
 
 	return;
 }

@@ -1,12 +1,14 @@
 #ifndef globalDeclarations_H_INCLUDED
 #define globalDeclarations_H_INCLUDED
 
+#include "Arduino.h"
 #include <LiquidCrystal_I2C.h>
+#include "RTClib.h"
 
-// Set LCD address
 extern LiquidCrystal_I2C lcd;
 
-// Set buttons
+extern RTC_DS1307 rtc;
+
 extern const int buttonPin_1;
 extern const int buttonPin_2;
 

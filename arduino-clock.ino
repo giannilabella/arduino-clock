@@ -3,12 +3,16 @@
 
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include "RTClib.h"
 #include "./headers/globalDeclarations.h"
 #include "./headers/functions.h"
 #include "./headers/dateTimeConfigFunctions.h"
 
 // Set LCD address
-LiquidCrystal_I2C lcd(0x3F,16,2);
+LiquidCrystal_I2C lcd(0x3F, 16, 2);
+
+// Set RTC
+RTC_DS1307 rtc;
 
 // Set buttons
 const int buttonPin_1 = 2;
@@ -25,14 +29,21 @@ void setup() {
 
 	// LCD setup
 	lcd.init();
+	lcd.setBacklight(HIGH);
+
+	rtc.begin();
+
+	if (!rtc.isrunning())
+	{
+		Serial.println("RTC lost power, lets set the time!");
+
+		// sets the date & time at which the sketch was compiled
+		rtc.adjust(DateTime(__DATE__, __TIME__));
+	}
 
 	// Buttons setup
 	pinMode(buttonPin_1, INPUT);
 	pinMode(buttonPin_2, INPUT);
-
-	lcd.setBacklight(HIGH);
-	lcd.setCursor(0,0);
-	lcd.print("LCD e modulo I2C");
 }
 
 void loop() {
@@ -44,4 +55,26 @@ void loop() {
 
 	lcd.setCursor(0,0);
 	lcd.print("Horario");
+
+	DateTime now = rtc.now();
+
+	if (now.second() == 0)
+	{
+		Serial.println("Current Date & Time: ");
+		Serial.print(now.year(), DEC);
+		Serial.print('/');
+		Serial.print(now.month(), DEC);
+		Serial.print('/');
+		Serial.print(now.day(), DEC);
+		Serial.print(" (");
+		Serial.print(now.dayOfTheWeek(), DEC);
+		Serial.print(") ");
+		Serial.print(now.hour(), DEC);
+		Serial.print(':');
+		Serial.print(now.minute(), DEC);
+		Serial.print(':');
+		Serial.print(now.second(), DEC);
+		Serial.println();
+	}
+
 }
