@@ -112,11 +112,6 @@ void clockConfigFunction() {
 	Serial.println(timeValue[1]);
 	Serial.println(timeValue[2]);
 
-	lcd.setCursor(0,0);
-	lcd.print("processo");
-	lcd.setCursor(0,1);
-	lcd.print("concluido");
-
 	rtc.adjust
 	(
 		DateTime
@@ -127,6 +122,13 @@ void clockConfigFunction() {
 			timeValue[2], timeValue[1], timeValue[0]
 		)
 	);
+
+	lcd.setCursor(1,0);
+	lcd.print("Set Date/Time");
+	lcd.setCursor(4,1);
+	lcd.print("Success");
+	delay(700);
+	lcd.clear();
 
 	return;
 }
