@@ -12,6 +12,7 @@
 ## Libraries
 - [LiquidCrystal I2C by Frank de Brabander](https://www.arduino.cc/reference/en/libraries/liquidcrystal-i2c/)
 - [RTClib by Adafruit](https://github.com/adafruit/RTClib)
+- [TM1637 by Avishay Orpaz](https://github.com/avishorp/TM1637)
 
 ## License
 - [MIT](https://choosealicense.com/licenses/mit/)
