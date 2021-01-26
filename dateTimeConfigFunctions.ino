@@ -1,4 +1,3 @@
-#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include "./headers/globalDeclarations.h"
 #include "./headers/functions.h"
@@ -26,6 +25,8 @@ void configDowSelectionHandler(char * selectionName, char ** selectionValues, in
 	lcd.print("ok");
 	delay(700);
 	lcd.clear();
+
+	return;
 }
 
 void configSelectionHandler(char * selectionName, int *selectionValue, int *limitValue, int *initialValue) {
@@ -65,6 +66,8 @@ void configSelectionHandler(char * selectionName, int *selectionValue, int *limi
 		delay(700);
 		lcd.clear();
 	}
+
+	return;
 }
 
 void clockConfigFunction() {
@@ -82,7 +85,6 @@ void clockConfigFunction() {
 	}
 
 	// DOW
-	char * DOWarray[] = {"", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
 	int DOWcounter = 1;
 	int limitDOWValue = 7;
 	int initialDOWValue = 1;
