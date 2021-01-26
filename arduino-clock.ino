@@ -55,7 +55,6 @@ void loop() {
 	if (buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0))
 	{
 		clockConfigFunction();
-		lcd.clear();
 	}
 
 	showDateTimeFunction(0);

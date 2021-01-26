@@ -81,7 +81,11 @@ void clockConfigFunction() {
 
 	while (! buttonClickHandler(&buttonPin_2, &buttonState_2, &previousButtonState_2, 0))
 	{
-		if (buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0)) return;
+		if (buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0)) 
+		{
+			lcd.clear();
+			return;
+		}
 	}
 
 	// DOW
