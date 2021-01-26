@@ -2,13 +2,20 @@
 #define globalDeclarations_H_INCLUDED
 
 #include "Arduino.h"
-#include <LiquidCrystal_I2C.h>
-#include "RTClib.h"
 
+// LCD
+#include <LiquidCrystal_I2C.h>
 extern LiquidCrystal_I2C lcd;
 
+// RTC
+#include "RTClib.h"
 extern RTC_DS1307 rtc;
 
+// 4-digit display
+#include <TM1637Display.h>
+extern TM1637Display display;
+
+// Buttons
 extern const int buttonPin_1;
 extern const int buttonPin_2;
 

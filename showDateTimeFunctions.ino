@@ -1,12 +1,15 @@
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
+#include <TM1637Display.h>
 #include "./headers/globalDeclarations.h"
 #include "./headers/functions.h"
 
 int currentMinute = 0;
 int pastMinute = 0;
 
-void showDateTimeFunction(int forceShow) {
+bool nightMode = 0;
+
+void showDateTimeFunction(int forceShow = false) {
 	DateTime now = rtc.now();
 	currentMinute = now.minute();
 
@@ -26,16 +29,47 @@ void showDateTimeFunction(int forceShow) {
 		lcd.print(" ");
 		lcd.print(DOWnamesList_short[now.dayOfTheWeek()]);
 
-		lcd.setCursor(5,1);
+		if (nightMode)
+		{
+			lcd.setCursor(5,1);
 
-		if (now.hour() < 10) lcd.print("0");
-		lcd.print(now.hour(), DEC);
-		lcd.print(":");
-		if (now.minute() < 10) lcd.print("0");
-		lcd.print(now.minute(), DEC);
+			if (now.hour() < 10) lcd.print("0");
+			lcd.print(now.hour(), DEC);
+			lcd.print("h");
+			if (now.minute() < 10) lcd.print("0");
+			lcd.print(now.minute(), DEC);
+			lcd.print("m");
+		}
+		else
+		{
+			// show hour
+			// 0b01000000: enable display colon
+			display.showNumberDecEx(now.hour(), 0b01000000, true, 2, 0);
+
+			// show minute
+			display.showNumberDec(now.minute(), true, 2, 2);
+		}
 	}
 
 	pastMinute = currentMinute;
 
 	return;
+}
+
+bool toggleNightModeFunction() {
+	if (nightMode == false)
+	{
+		nightMode = true;
+		display.setBrightness(0, 0);
+		display.clear();
+		showDateTimeFunction(true);
+	}
+	else if (nightMode == true)
+	{
+		nightMode = false;
+		display.setBrightness(0, 1);
+		showDateTimeFunction(true);
+	}
+
+	return nightMode;
 }

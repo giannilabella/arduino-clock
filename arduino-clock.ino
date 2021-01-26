@@ -1,9 +1,9 @@
 //Programa: Digital Clock with humidity and temperature sensor
 //Autor: Gianni Labella
 
-// #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
+#include <TM1637Display.h>
 #include "./headers/globalDeclarations.h"
 #include "./headers/functions.h"
 #include "./headers/dateTimeConfigFunctions.h"
@@ -14,6 +14,11 @@ LiquidCrystal_I2C lcd(0x3F, 16, 2);
 
 // Set RTC
 RTC_DS1307 rtc;
+
+// Set 4-digit display
+#define CLK 4
+#define DIO 5
+TM1637Display display(CLK, DIO);
 
 // Set buttons
 const int buttonPin_1 = 2;
@@ -43,19 +48,28 @@ void setup() {
 		rtc.adjust(DateTime(__DATE__, __TIME__));
 	}
 
+	// 4-digit display setup
+	display.setBrightness(0, 1);
+
 	// Buttons setup
 	pinMode(buttonPin_1, INPUT);
 	pinMode(buttonPin_2, INPUT);
 
 	// Show Date/Time
-	showDateTimeFunction(1);
+	showDateTimeFunction(true);
 }
 
 void loop() {
+	showDateTimeFunction();
+
 	if (buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0))
 	{
 		clockConfigFunction();
+		showDateTimeFunction(true);
 	}
 
-	showDateTimeFunction(0);
+	if (buttonClickHandler(&buttonPin_2, &buttonState_2, &previousButtonState_2, 0))
+	{
+		toggleNightModeFunction();
+	}
 }
