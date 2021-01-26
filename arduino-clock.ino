@@ -1,12 +1,13 @@
 //Programa: Digital Clock with humidity and temperature sensor
 //Autor: Gianni Labella
 
-#include <Wire.h>
+// #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
 #include "./headers/globalDeclarations.h"
 #include "./headers/functions.h"
 #include "./headers/dateTimeConfigFunctions.h"
+#include "./headers/showDateTimeFunctions.h"
 
 // Set LCD address
 LiquidCrystal_I2C lcd(0x3F, 16, 2);
@@ -31,6 +32,7 @@ void setup() {
 	lcd.init();
 	lcd.setBacklight(HIGH);
 
+	// RTC setup
 	rtc.begin();
 
 	if (!rtc.isrunning())
@@ -44,6 +46,9 @@ void setup() {
 	// Buttons setup
 	pinMode(buttonPin_1, INPUT);
 	pinMode(buttonPin_2, INPUT);
+
+	// Show Date/Time
+	showDateTimeFunction(1);
 }
 
 void loop() {
@@ -53,28 +58,5 @@ void loop() {
 		lcd.clear();
 	}
 
-	lcd.setCursor(0,0);
-	lcd.print("Horario");
-
-	DateTime now = rtc.now();
-
-	if (now.second() == 0)
-	{
-		Serial.println("Current Date & Time: ");
-		Serial.print(now.year(), DEC);
-		Serial.print('/');
-		Serial.print(now.month(), DEC);
-		Serial.print('/');
-		Serial.print(now.day(), DEC);
-		Serial.print(" (");
-		Serial.print(now.dayOfTheWeek(), DEC);
-		Serial.print(") ");
-		Serial.print(now.hour(), DEC);
-		Serial.print(':');
-		Serial.print(now.minute(), DEC);
-		Serial.print(':');
-		Serial.print(now.second(), DEC);
-		Serial.println();
-	}
-
+	showDateTimeFunction(0);
 }
