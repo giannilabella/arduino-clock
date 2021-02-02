@@ -1,5 +1,5 @@
 # Arduino Clock
-- Desk Clock with Temperature and Humidity Sensor
+Desk Clock with Temperature and Humidity Sensor
 
 ## Hardware
 - Arduino Nano
@@ -10,9 +10,12 @@
 - TM1637 4-digit 7-segment LED Display
 
 ## Libraries
-- [LiquidCrystal I2C by Frank de Brabander](https://www.arduino.cc/reference/en/libraries/liquidcrystal-i2c/)
+All Installed using the Arduino IDE Library Manager:
+
+- [LiquidCrystal I2C by Frank de Brabander](https://github.com/johnrickman/LiquidCrystal_I2C)
 - [RTClib by Adafruit](https://github.com/adafruit/RTClib)
 - [TM1637 by Avishay Orpaz](https://github.com/avishorp/TM1637)
+- [DHT sensor library by Adafruit](https://github.com/adafruit/DHT-sensor-library)
 
 ## License
 - [MIT](https://choosealicense.com/licenses/mit/)
