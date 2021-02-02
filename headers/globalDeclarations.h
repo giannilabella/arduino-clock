@@ -1,8 +1,6 @@
 #ifndef globalDeclarations_H_INCLUDED
 #define globalDeclarations_H_INCLUDED
 
-#include "Arduino.h"
-
 // LCD
 #include <LiquidCrystal_I2C.h>
 extern LiquidCrystal_I2C lcd;

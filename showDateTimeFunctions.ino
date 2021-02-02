@@ -2,7 +2,6 @@
 #include "RTClib.h"
 #include <TM1637Display.h>
 #include "./headers/globalDeclarations.h"
-#include "./headers/functions.h"
 
 int currentMinute = 0;
 int pastMinute = 0;
