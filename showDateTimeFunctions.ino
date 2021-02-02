@@ -4,7 +4,7 @@
 #include "./headers/globalDeclarations.h"
 
 int currentMinute = 0;
-int pastMinute = 0;
+int previousMinute = 0;
 
 bool nightMode = 0;
 
@@ -12,7 +12,7 @@ void showDateTimeFunction(int forceShow = false) {
 	DateTime now = rtc.now();
 	currentMinute = now.minute();
 
-	if (currentMinute != pastMinute || forceShow == 1)
+	if (currentMinute != previousMinute || forceShow == 1)
 	{
 		lcd.clear();
 
@@ -50,7 +50,7 @@ void showDateTimeFunction(int forceShow = false) {
 		}
 	}
 
-	pastMinute = currentMinute;
+	previousMinute = currentMinute;
 
 	return;
 }
