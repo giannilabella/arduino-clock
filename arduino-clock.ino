@@ -4,6 +4,7 @@
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
 #include <TM1637Display.h>
+#include "DHT.h"
 #include "./headers/globalDeclarations.h"
 #include "./headers/functions.h"
 #include "./headers/dateTimeConfigFunctions.h"
@@ -21,6 +22,11 @@ RTC_DS1307 rtc;
 #define CLK 4
 #define DIO 5
 TM1637Display display(CLK, DIO);
+
+// Set DHT11 sensor
+#define DHTPIN 7
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
 
 // Set buttons
 const int buttonPin_1 = 2;
@@ -58,12 +64,18 @@ void setup() {
 	// 4-digit display setup
 	display.setBrightness(0, 1);
 
+	// DHT11 sensor setup
+	dht.begin();
+
 	// Buttons setup
 	pinMode(buttonPin_1, INPUT);
 	pinMode(buttonPin_2, INPUT);
 
 	// Show Date/Time
 	showDateTimeFunction(true);
+
+	// Show Weather Data
+	showWeatherDataFunction(true);
 }
 
 void loop() {
@@ -73,11 +85,16 @@ void loop() {
 	if (buttonClickHandler(&buttonPin_1, &buttonState_1, &previousButtonState_1, 0))
 	{
 		clockConfigFunction();
+
 		showDateTimeFunction(true);
+		showWeatherDataFunction(true);
 	}
 
 	if (buttonClickHandler(&buttonPin_2, &buttonState_2, &previousButtonState_2, 0))
 	{
 		toggleNightModeFunction();
+
+		showDateTimeFunction(true);
+		showWeatherDataFunction(true);
 	}
 }

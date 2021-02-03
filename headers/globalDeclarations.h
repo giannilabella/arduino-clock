@@ -13,6 +13,10 @@ extern RTC_DS1307 rtc;
 #include <TM1637Display.h>
 extern TM1637Display display;
 
+// DHT11 sensor
+#include "DHT.h"
+extern DHT dht;
+
 // Buttons
 extern const int buttonPin_1;
 extern const int buttonPin_2;

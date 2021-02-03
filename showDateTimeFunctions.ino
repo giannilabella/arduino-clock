@@ -14,8 +14,6 @@ void showDateTimeFunction(int forceShow = false) {
 
 	if (currentMinute != previousMinute || forceShow == 1)
 	{
-		lcd.clear();
-
 		lcd.setCursor(0,0);
 
 		lcd.print(monthsNamesList_short[now.month()]);
@@ -61,13 +59,12 @@ bool toggleNightModeFunction() {
 		nightMode = true;
 		display.setBrightness(0, 0);
 		display.clear();
-		showDateTimeFunction(true);
 	}
 	else if (nightMode == true)
 	{
 		nightMode = false;
 		display.setBrightness(0, 1);
-		showDateTimeFunction(true);
+		lcd.clear();
 	}
 
 	return nightMode;
